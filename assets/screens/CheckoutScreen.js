@@ -1,16 +1,22 @@
 // screens/CheckoutScreen.js
 import React, { useContext } from 'react';
 import { View, Text, Button, StyleSheet, Alert } from 'react-native';
-import { CartContext } from '../context/CartContext';
+import { CartContext } from '../context/CartContext'; // Import CartContext
 
 const CheckoutScreen = ({ navigation }) => {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, clearCart } = useContext(CartContext); // Access clearCart
 
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
   const handleCheckout = () => {
     Alert.alert('Checkout successful', '', [
-      { text: 'OK', onPress: () => navigation.navigate('Home') },
+      { 
+        text: 'OK', 
+        onPress: () => {
+          clearCart(); // Clear the cart after pressing OK
+          navigation.navigate('Home'); // Navigate to Home
+        } 
+      },
     ]);
   };
 
